@@ -23,4 +23,4 @@ headers = {
 
 r = requests.post(url, data=post_data, headers=headers)
 r.raise_for_status()
-pprint.pprint(json.loads(r.text))
+print json.loads(r.text)['access_token']
