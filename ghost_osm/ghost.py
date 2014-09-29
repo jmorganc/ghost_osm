@@ -7,10 +7,11 @@ Endpoints: https://github.com/TryGhost/Ghost/wiki/%5BWIP%5D-API-Documentation#en
 """
 
 import sys
-import config
 import requests
 import json
 import time
+
+import config
 
 
 def main():

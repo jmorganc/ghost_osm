@@ -14,7 +14,9 @@ ghost = {
     'token_expiry': 3600
 }
 
-osm = {}
+osm = {
+    'username': 'Obrit'
+}
 
 
 def update_token(token_new):
