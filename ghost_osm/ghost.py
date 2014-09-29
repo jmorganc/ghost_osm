@@ -21,7 +21,7 @@ def main():
 
 
 def is_valid_token():
-    if time.time() - config.ghost['token_timestamp'] >= 3600:
+    if time.time() - config.ghost['token_timestamp'] >= config.ghost['token_expiry']:
         print 'Token expired'
         return False
     return True

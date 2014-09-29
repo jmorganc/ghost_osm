@@ -10,7 +10,8 @@ ghost = {
     'username': auth['username'],
     'password': auth['password'],
     'token': auth['token'],
-    'token_timestamp': auth['token_timestamp']
+    'token_timestamp': auth['token_timestamp'],
+    'token_expiry': 3600
 }
 
 osm = {}
