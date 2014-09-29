@@ -33,14 +33,18 @@ def main():
                 print li.h4.a.contents[0].strip()
                 date_created = li.div.abbr['title'].replace('Created:', '|').replace('Closed:', '|').split('|')[1].strip()
                 #Wed, 14 Aug 2014 HH:MM:SS +0000
-                print date_created
+                #print date_created
                 date_created = time.strptime(date_created, '%a, %d %b %Y %H:%M:%S +0000')
-                print date_created
-                date_created_datetime = datetime.datetime.fromtimestamp(time.mktime(date_created))
-                date_created_utc = date_created_datetime.utcnow()
-                print date_created_utc
+                #Ghost format: 2014-04-15T12:36:28.353Z
+                print time.strftime('%Y-%m-%dT%H:%M:%S.000Z', date_created)
+                #print date_created
+                #print time.gmtime()
+                #date_created_datetime = datetime.datetime.fromtimestamp(time.mktime(date_created))
+                #print date_created_datetime
+                #date_created_utc = date_created_datetime.utcnow()
+                #print date_created_utc
                 #print time.strftime('%Y-%m-%d %H:%M:%S', date_created)
-                print datetime.tzinfo.fromutc(date_created_utc)
+                #print datetime.tzinfo.fromutc(date_created_utc)
             if a_load_more:
                 break
                 # url = 'https://www.openstreetmap.org{0}'.format(a_load_more['href'])
