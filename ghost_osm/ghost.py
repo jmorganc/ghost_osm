@@ -77,8 +77,8 @@ def post(osm_posts):
     data = post_data
     headers = {
         'Content-type': 'application/x-www-form-urlencoded',
-        #'Accept': 'application/json',
-        #'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
         'Authorization': 'Bearer {0}'.format(config.ghost['token'])
     }
     print data
