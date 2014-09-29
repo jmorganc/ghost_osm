@@ -1,7 +1,9 @@
 """
 @TODO
-    Find if token is good and use it
-        Otherwise, generate a new one
+    -
+
+Endpoints: https://github.com/TryGhost/Ghost/wiki/%5BWIP%5D-API-Documentation#endpoints
+    /ghost/api/v0.1/posts/1/
 """
 
 import sys
@@ -11,7 +13,27 @@ import json
 
 
 def main():
-    print generate_token()
+    token = config.ghost['token']
+    if not is_valid_token(token):
+        token = generate_token()
+        config.update_token(token)
+
+
+def is_valid_token(token):
+    headers = {
+        'Authorization': 'Bearer {0}'.format(token)
+    }
+    r = requests.get('http://{0}/ghost/api/v0.1/users/me/'.format(config.ghost['base_url']), headers=headers)
+
+    if r.status_code != 200:
+        if r.status_code == 401:
+            print '401: Unauthorized, need to get a token'
+            return False
+        else:
+            r.raise_for_status()
+    else:
+        print '200: It works'
+        return True
 
 
 def generate_token():
