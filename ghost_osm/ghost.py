@@ -1,3 +1,9 @@
+"""
+@TODO
+    Find if token is good and use it
+        Otherwise, generate a new one
+"""
+
 import sys
 import config
 import requests
