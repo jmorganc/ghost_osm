@@ -15,13 +15,20 @@ import config
 
 
 def main():
-    token = config.ghost['token']
-    if not is_valid_token():
-        token = generate_token()
+    pass
+
+
+def authenticate():
+    print 'Authenticating to Ghost...'
+    if not _is_valid_token():
+        print 'Token has expired or is invalid. Regenerating...'
+        token = _generate_token()
         config.update_token(token)
+        print 'New token generated.'
+    print 'Authenticated.'
 
 
-def is_valid_token():
+def _is_valid_token():
     if time.time() - config.ghost['token_timestamp'] >= config.ghost['token_expiry']:
         print 'Token expired'
         return False
@@ -42,7 +49,7 @@ def is_valid_token():
     #     return True
 
 
-def generate_token():
+def _generate_token():
     url = 'http://{0}/ghost/api/v0.1/authentication/token'.format(
         config.ghost['base_url']
     )
@@ -61,7 +68,30 @@ def generate_token():
     return json.loads(r.text)['access_token']
 
 
-def post():
+def post(osm_posts):
+    post_data = _format_post(osm_posts)
+
+    url = 'http://{0}/ghost/api/v0.1/posts'.format(
+        config.ghost['base_url']
+    )
+    data = post_data
+    headers = {
+        'Content-type': 'application/x-www-form-urlencoded',
+        #'Accept': 'application/json',
+        #'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer {0}'.format(config.ghost['token'])
+    }
+    print data
+    #sys.exit()
+    r = requests.post(url, data=data, headers=headers)
+    print r.text
+    print r.headers
+    r.raise_for_status()
+
+    return r.status_code
+
+
+def _format_post(osm_posts):
     """
     {
         posts: [
@@ -91,7 +121,24 @@ def post():
         ]
     }
     """
-    pass
+    post_data = []
+    for post in osm_posts:
+        post_data.append({
+            'status': 'published',
+            'title': 'OpenStreetMap Edit - {0}'.format(post['created']),
+            'markdown': post['description'],
+            'author': 1,
+            'created_by': 1,
+            'published_by': 1,
+            'created_at': post['created'],
+            'updated_at': post['created'],
+            'published_at': post['created'],
+            'tags': ['ghost_osm']
+        })
+    post_data = {'posts': post_data}
+
+    #return json.dumps(post_data)
+    return post_data
 
 
 if __name__ == '__main__':
