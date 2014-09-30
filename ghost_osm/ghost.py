@@ -22,8 +22,8 @@ def authenticate():
     print 'Authenticating to Ghost...'
     if not _is_valid_token():
         print 'Token has expired or is invalid. Regenerating...'
-        token = _generate_token()
-        config.update_token(token)
+        token_access, token_refresh = _generate_token()
+        config.update_token(token_access, token_refresh)
         print 'New token generated.'
     print 'Authenticated.'
 
@@ -65,7 +65,9 @@ def _generate_token():
 
     r = requests.post(url, data=data, headers=headers)
     r.raise_for_status()
-    return json.loads(r.text)['access_token']
+    response = json.loads(r.text)
+
+    return response['access_token'], response['refresh_token']
 
 
 def post(osm_posts):

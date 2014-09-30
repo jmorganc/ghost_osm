@@ -10,6 +10,7 @@ ghost = {
     'username': auth['username'],
     'password': auth['password'],
     'token': auth['token'],
+    'token_refresh': auth['token_refresh'],
     'token_timestamp': auth['token_timestamp'],
     'token_expiry': 3600
 }
@@ -19,8 +20,8 @@ osm = {
 }
 
 
-def update_token(token_new):
+def update_token(token_new, token_refresh):
     with open('auth.yml', 'w') as auth_fh:
-        auth_fh.write('---\nusername: {0}\npassword: {1}\ntoken: {2}\ntoken_timestamp: {3}\n'.format(
-            auth['username'], auth['password'], token_new, time.time()
+        auth_fh.write('---\nusername: {0}\npassword: {1}\ntoken: {2}\ntoken_refresh: {3}\ntoken_timestamp: {4}\n'.format(
+            auth['username'], auth['password'], token_new, token_refresh, time.time()
         ))
