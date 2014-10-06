@@ -12,7 +12,8 @@ ghost = {
     'token': auth['token'],
     'token_refresh': auth['token_refresh'],
     'token_timestamp': auth['token_timestamp'],
-    'token_expiry': 3600
+    'token_expiry': 3600,
+    'token_refresh_expiry': 86400
 }
 
 osm = {
